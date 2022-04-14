@@ -69,6 +69,7 @@
                   "</td><td>" +
                   laws[k].statements +
                   "</td><td></td></tr>";
+                continue;
               }
               table +=
                 "<td>" +
@@ -80,6 +81,7 @@
               count++;
             }
           }
+          break; // stop after first iteration
         }
 
         document.getElementById("root").innerHTML = table + "</tbody></table>";
