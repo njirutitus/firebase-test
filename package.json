@@ -1,0 +1,26 @@
+{
+  "name": "akasha",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njirutitus/firebase-test.git"
+  },
+  "author": "Titus Njiru",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/njirutitus/firebase-test/issues"
+  },
+  "homepage": "https://github.com/njirutitus/firebase-test#readme",
+  "dependencies": {
+    "firebase": "^9.6.11"
+  },
+  "devDependencies": {
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
