@@ -68,7 +68,9 @@ export async function queryForDocuments(collectionRef) {
     console.log("No matching documents.");
     return;
   }
+  const questions = {};
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, "=>", doc.data());
+    questions[doc.id] = doc.data();
   });
+  console.log(questions);
 }
