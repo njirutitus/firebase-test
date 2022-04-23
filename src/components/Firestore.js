@@ -51,13 +51,15 @@ export async function readASingleDocument(docRef) {
 // listen to a document
 export async function listenToDocument(docRef) {
   const ref = doc(firestore, docRef);
-  onSnapshot(ref, (snapshot) => {
-    if (snapshot.exists) {
-      console.log(snapshot.data());
-    } else {
-      console.log("No such document!");
-    }
-  });
+  const stream = (callback) =>
+    onSnapshot(ref, (snapshot) => {
+      if (snapshot.exists) {
+        callback(snapshot.data());
+      } else {
+        callback(null);
+      }
+    });
+  return stream;
 }
 
 // Query for documents
@@ -67,9 +69,8 @@ export function getQuestions(collectionRef) {
   const questionsQuery = query(ref);
   const stream = (callback) =>
     onSnapshot(questionsQuery, (snapshot) => {
-      const questions = {};
-      snapshot.forEach((doc) => {
-        questions[doc.id] = doc.data();
+      const questions = snapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
       });
       callback(questions);
     });
