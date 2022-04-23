@@ -1,4 +1,6 @@
 import { async } from "@firebase/util";
+import { display } from "./Display";
+
 import {
   getFirestore,
   doc,
@@ -60,17 +62,17 @@ export async function listenToDocument(docRef) {
 
 // Query for documents
 
-export async function queryForDocuments(collectionRef) {
+export function getQuestions(collectionRef) {
   const ref = collection(firestore, collectionRef);
-  //   const queryAll = query(ref);
-  const querySnapshot = await getDocs(query(ref));
-  if (querySnapshot.empty) {
-    console.log("No matching documents.");
-    return;
-  }
-  const questions = {};
-  querySnapshot.forEach((doc) => {
-    questions[doc.id] = doc.data();
-  });
-  console.log(questions);
+  const questionsQuery = query(ref);
+  const stream = (callback) =>
+    onSnapshot(questionsQuery, (snapshot) => {
+      const questions = {};
+      snapshot.forEach((doc) => {
+        questions[doc.id] = doc.data();
+      });
+      callback(questions);
+    });
+
+  return stream;
 }

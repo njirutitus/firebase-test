@@ -5,7 +5,7 @@ import {
   addNewDocument,
   readASingleDocument,
   listenToDocument,
-  queryForDocuments,
+  getQuestions,
 } from "./components/Firestore";
 import { app } from "./config";
 
@@ -14,7 +14,7 @@ const reference = ref(db, "AssessmentQues/");
 
 onValue(reference, (snapshot) => {
   const questions = snapshot.val();
-  display(questions);
+  // display(questions);
 });
 
 const data = {
@@ -37,4 +37,9 @@ const data = {
 // addNewDocument("questions", data);
 // readASingleDocument("AssessmentQues/005");
 listenToDocument("AssessmentQues/004");
-queryForDocuments("questions");
+
+const stream = getQuestions("questions");
+
+stream((questions) => {
+  display(questions);
+});

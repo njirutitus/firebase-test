@@ -1,6 +1,7 @@
 export function display(questions) {
   let table =
     "<table><thead><tr><th>Question Category</th><th>Question Id</th><th>Question Law Name</th><th>Question Law statements</th><th>Question</th></tr></thead><tbody>";
+  // console.log(questions);
   for (const question in questions) {
     table += "<tr><td>";
     const value = questions[question];
@@ -32,5 +33,6 @@ export function display(questions) {
     //   break; // stop after first iteration
   }
 
+  console.log(table);
   document.getElementById("root").innerHTML = table + "</tbody></table>";
 }

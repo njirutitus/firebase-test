@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyD_GdrfOLFnhWSFhpTFh4kxkdCxcx9xYbw",
   authDomain: "lawfirm-847fa.firebaseapp.com",
   databaseURL: "https://lawfirm-847fa-default-rtdb.firebaseio.com",
