@@ -32,7 +32,5 @@ export function display(questions) {
     }
     //   break; // stop after first iteration
   }
-
-  console.log(table);
   document.getElementById("root").innerHTML = table + "</tbody></table>";
 }
