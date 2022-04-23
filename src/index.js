@@ -7,6 +7,7 @@ import {
   listenToDocument,
   getQuestions,
 } from "./components/Firestore";
+import { DisplayQualificationQuestions } from "./components/QualificationQuestions";
 import { app } from "./config";
 
 const db = getDatabase(app);
@@ -41,5 +42,6 @@ listenToDocument("AssessmentQues/004");
 const stream = getQuestions("questions");
 
 stream((questions) => {
-  display(questions);
+  // display(questions);
+  DisplayQualificationQuestions(questions);
 });
