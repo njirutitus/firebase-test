@@ -21,25 +21,32 @@ onValue(reference, (snapshot) => {
 const data = {
   quescat: "Criminal Law",
   quesid: "005",
-  question: "What is the meaning of life?",
-  queslaws: [
-    {
-      lawname: "Law 1",
-      statements: "Statement 1",
+  question: "Are assets a threat to your company?",
+  questionType: "radio",
+  options: {
+    Yes: {
+      category: "asset management",
+      assessmentQuestion: [
+        "How do you keep your assets?",
+        "Do you use coso laws in your business?",
+      ],
     },
-    {
-      lawname: "Law 2",
-      statements: "Statement 2",
+    no: {
+      category: "Software management",
+      assessmentQuestion: [
+        "How well do you keep your software?",
+        "Do you use AIP laws in your firm?",
+      ],
     },
-  ],
+  },
 };
 
 // write("AssessmentQues/005", data);
-// addNewDocument("questions", data);
+// addNewDocument("qualificationQuestions", data);
 // readASingleDocument("AssessmentQues/005");
 listenToDocument("AssessmentQues/004");
 
-const stream = getQuestions("questions");
+const stream = getQuestions("qualificationQuestions");
 
 stream((questions) => {
   // display(questions);
