@@ -13,6 +13,10 @@ export function DisplayQualificationQuestions(questions) {
       addNewDocument("qualificationAnswers", data);
       AssessmentQuestions();
     }
+    if (e.target.id === "ass_form") {
+      document.getElementById("root").innerHTML =
+        "<h5>You response has been Recorded. Thank you!<h5>";
+    }
   });
 
   let form =
