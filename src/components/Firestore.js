@@ -31,7 +31,7 @@ export async function addNewDocument(collectionRef, data) {
   const ref = collection(firestore, collectionRef);
   try {
     const newDoc = await addDoc(ref, data);
-    console.log("Document written with ID: ", newDoc.path);
+    sessionStorage.setItem("id", newDoc.id);
   } catch (error) {
     console.log(error);
   }
