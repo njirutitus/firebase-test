@@ -55,7 +55,7 @@ export function AssessmentQuestions() {
       form += `<h4>${question.category}</h4>`;
       const assessmentQuestions = question.assessmentQuestion;
       assessmentQuestions.forEach((question) => {
-        form += `<div><label>${question}</label><input type="radio"/>Yes<input type="radio"/>NO</div>`;
+        form += `<div><label>${question}</label><input type="range" min="0" max="10" value="0"/></div>`;
       });
     });
     return form;

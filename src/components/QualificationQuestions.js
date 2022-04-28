@@ -23,17 +23,11 @@ export function DisplayQualificationQuestions(questions) {
     '<form id="qual_form" method="post"><h3>Qualification Questions</h3>';
   questions.forEach((question) => {
     form += "<div>";
-    form +=
-      '<label for="' + question.id + '">' + question.question + "</label>";
+    form += "<label>" + question.question + "</label>";
     const options = question.options;
-    Object.entries(options).forEach(([key, value]) => {
-      if (question.questionType === "radio")
-        form += `<input type="${question.questionType}" name="${question.id}" value="${key}"/>${key}`;
-      else
-        form += `<input type="${question.questionType}" name="${
-          question.id + "_" + key
-        }" value="${key}"/>${key}`;
-    });
+    for (let key in options) {
+      form += `<div><input type="radio" name="${question.id}" value="${key}"/>${key}</div>`;
+    }
     form += "</div>";
   });
   document.getElementById("root").innerHTML =
