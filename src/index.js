@@ -1,4 +1,5 @@
 import { getDatabase, ref, onValue } from "firebase/database";
+import { assessment } from "./components/Assessment";
 import { display } from "./components/Display";
 import {
   write,
@@ -7,6 +8,7 @@ import {
   listenToDocument,
   getQuestions,
 } from "./components/Firestore";
+import { Qualification } from "./components/Qualification";
 import { DisplayQualificationQuestions } from "./components/QualificationQuestions";
 import { app } from "./config";
 
@@ -24,19 +26,17 @@ const data = {
   question: "Are assets a threat to your company?",
   questionType: "radio",
   options: {
-    Yes: {
-      category: "asset management",
-      assessmentQuestion: [
-        "How do you keep your assets?",
-        "Do you use coso laws in your business?",
-      ],
+    option1: {
+      category: "SGOWZRNrKjVQ0scDRfza",
+      laws: ["gULcLPDMGHtzuEor9ZFk"],
     },
-    no: {
-      category: "Software management",
-      assessmentQuestion: [
-        "How well do you keep your software?",
-        "Do you use AIP laws in your firm?",
-      ],
+    option2: {
+      category: "SGOWZRNrKjVQ0scDRfza",
+      laws: ["gULcLPDMGHtzuEor9ZFk"],
+    },
+    option3: {
+      category: "SGOWZRNrKjVQ0scDRfza",
+      laws: ["gULcLPDMGHtzuEor9ZFk"],
     },
   },
 };
@@ -44,11 +44,20 @@ const data = {
 // write("AssessmentQues/005", data);
 // addNewDocument("qualificationQuestions", data);
 // readASingleDocument("AssessmentQues/005");
-listenToDocument("AssessmentQues/004");
+// listenToDocument("AssessmentQues/004");
 
-const stream = getQuestions("qualificationQuestions");
+// const stream = getQuestions("qualificationQuestions");
 
-stream((questions) => {
-  // display(questions);
-  DisplayQualificationQuestions(questions);
-});
+// stream((questions) => {
+//   // display(questions);
+//   DisplayQualificationQuestions(questions);
+// });
+
+// Qualification();
+// assessment();
+
+if (window.location.pathname === "/assessment") {
+  assessment();
+} else if (window.location.pathname === "/qualification") {
+  Qualification();
+}
