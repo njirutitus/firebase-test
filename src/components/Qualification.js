@@ -91,7 +91,8 @@ function handleSubmit(e) {
     let category = input.dataset.category;
     answers.push({ optionId: value, law, category });
   }
-  addNewDocument("qualAnswers", data);
-  window.location.href = "./assessment.html";
-  sessionStorage.setItem("answers", JSON.stringify(answers));
+  addNewDocument("qualAnswers", data).then(() => {
+    sessionStorage.setItem("answers", JSON.stringify(answers));
+    window.location.href = "./assessment.html";
+  });
 }
