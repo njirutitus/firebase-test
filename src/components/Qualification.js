@@ -1,5 +1,8 @@
+import { async } from "@firebase/util";
 import {
   collection,
+  deleteDoc,
+  getDocs,
   getFirestore,
   onSnapshot,
   query,
@@ -9,14 +12,24 @@ import { addNewDocument } from "./Firestore";
 const firestore = getFirestore(app);
 
 export function Qualification() {
-  const questionsCol = collection(firestore, "qualQues");
-  const questionsQuery = query(questionsCol);
-  onSnapshot(questionsQuery, (snapshot) => {
-    const questions = snapshot.docs.map((doc) => {
-      return { id: doc.id, ...doc.data() };
-    });
+  document.getElementById("qual_form").setAttribute("aria-busy", "true");
+  fetchQuestions().then((questions) => {
+    document.getElementById("qual_form").setAttribute("aria-busy", "false");
     options(questions);
   });
+}
+
+export async function fetchQuestions() {
+  const questionsCol = collection(firestore, "qualQues");
+  const questionsQuery = query(questionsCol);
+  const snapshot = await getDocs(questionsQuery);
+  if (snapshot.empty) {
+    return [];
+  }
+  const questions = snapshot.docs.map((doc) => {
+    return { id: doc.id, ...doc.data() };
+  });
+  return questions;
 }
 
 function options(questions) {
@@ -31,8 +44,31 @@ function options(questions) {
     label.innerHTML = question.question;
     form.appendChild(div);
     div.appendChild(label);
-    const streamOptions = getOptions(question.id);
-    streamOptions((options) => {
+    div.setAttribute("aria-busy", "true");
+    let qualQuestion = `<div class="row my-3 justify-content-center">
+    <div class="col-6 bg-light rounded-2">
+      <h4 class="text-center my-2">Question 1</h4>
+      <!-- question text -->
+      <p class="text-center">Do you store personal data?</p>
+        <!-- collapsable options button -->
+      <div class="accordion accordion-flush my-2">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingone">
+            <button class="accordion-button collapsed mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseone" aria-expanded="false" aria-controls="collapseone">
+              Options
+            </button>
+          </h2>
+          <!-- options  -->
+          <div id="collapseone" class="accordion-collapse collapse" aria-labelledby="headingone" data-bs-parent="#accordionExample">
+            <div class="accordion-body">`;
+    getOptions(question.id).then((snapshot) => {
+      div.setAttribute("aria-busy", "false");
+      const options = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
       options.forEach((option) => {
         renderOption(option, question.id);
       });
@@ -61,22 +97,12 @@ function renderOption(option, questionID) {
   div.appendChild(span);
 }
 
-function getOptions(questionID) {
+export async function getOptions(questionID) {
   const optionsCol = collection(firestore, "qualQues", questionID, "options");
   const optionsQuery = query(optionsCol);
-  const stream = (callback) =>
-    onSnapshot(optionsQuery, (snapshot) => {
-      const options = snapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data(),
-        };
-      });
+  const snapshot = await getDocs(optionsQuery);
 
-      callback(options);
-    });
-
-  return stream;
+  return snapshot;
 }
 
 function handleSubmit(e) {
